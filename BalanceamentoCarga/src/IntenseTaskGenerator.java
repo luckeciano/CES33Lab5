@@ -11,6 +11,7 @@ public class IntenseTaskGenerator implements TaskGenerator {
 		nProcessors = nProc;
 	}
 	public Task generateTask(int cpuID, int startTime, int eTime) {
+		return null;
 		
 	}
 

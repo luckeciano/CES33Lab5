@@ -10,8 +10,8 @@ public class LightTaskGenerator implements TaskGenerator {
 		AMOUNT = amount;
 		nProcessors = nProc;
 	}
-	@Override
-	public Task generateTask(int cpuID, int startTime, int eTime) {
+	
+	public Task generateTask(int TMT, int AMOUNT) {
 		// TODO Auto-generated method stub
 		return null;
 	}
