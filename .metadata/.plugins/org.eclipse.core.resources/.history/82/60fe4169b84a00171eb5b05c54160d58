@@ -1,0 +1,13 @@
+
+public class CPU {
+	private int nProcess;
+	private float rateCPU;
+	private float processRatio;
+	
+	public CPU(int nProc, float cpuUse, float processRate) {
+		nProcess = nProc;
+		rateCPU = cpuUse;
+		processRatio = processRate;
+	}
+
+}

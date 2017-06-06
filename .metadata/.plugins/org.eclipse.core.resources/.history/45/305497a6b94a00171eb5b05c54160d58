@@ -1,0 +1,12 @@
+
+public class TaskFactory {
+	private TaskGenerator taskGenerator = null;
+	public TaskGenerator createTaskGenerator (String type, int TMT, int AMOUNT, int N) {
+		if (type == "intense") {
+			taskGenerator = new IntenseTaskGenerator(TMT, AMOUNT, N);
+		}
+		else if (type == "light") {
+			taskGenerator = new LightTaskGenerator(TMT, AMOUNT, N);
+		}
+	}
+}

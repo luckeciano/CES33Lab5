@@ -1,0 +1,4 @@
+
+public interface TaskGenerator {
+	public void generateTask (int TMT, int AMOUNT);
+}

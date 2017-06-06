@@ -1,0 +1,10 @@
+
+public class IntenseTaskGenerator implements TaskGenerator {
+	private int TMT;
+	private int AMOUNT;
+	
+	public Task generateTask (int TMT, int AMOUNT) {
+		
+	}
+
+}
