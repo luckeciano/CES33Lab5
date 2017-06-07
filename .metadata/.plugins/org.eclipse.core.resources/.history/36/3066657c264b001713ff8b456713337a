@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+
+public class CPU {
+	private static int ID = 0;
+	private int nProcess;
+	private int cpuID;
+	private float rateCPU;
+	private float processRatio;
+	private ArrayList<Task> runningTasks;
+	private TaskGenerator taskGenerator;
+	public CPU(int nProc, float cpuUse, float processRate) {
+		cpuID = ID++;
+		nProcess = nProc;
+		rateCPU = cpuUse;
+		processRatio = processRate;
+		runningTasks = new ArrayList<Task>();
+	}
+	
+	public void addTaskGenerator (int TMT, int Amount, int nProc, String type) {
+		TaskFactory taskFactory = new TaskFactory();
+		taskGenerator = TaskFactory.createTaskGenerator("intense", TMT, Amount, nProc);
+	}
+	
+	public void generateTask() {
+		
+	}
+
+	public void update() {
+		ArrayList<Integer> killProcess = new ArrayList<Integer>();
+		int rateNow = 0;
+		for (int i = 0; i < runningTasks.size() && rateNow < rateCPU; i++) {
+			rateNow += runningTasks.get(i).getTaskRate();
+			runningTasks.get(i).execute();
+			if (runningTasks.get(i).getRemainingTime() == 0) {
+				killProcess.add(i);
+			}
+		}
+		for (int process : killProcess) {
+			runningTasks.remove(process);
+		}
+		
+	}
+
+}

@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+
+public class Main {
+	private static int N_CPUS = 10;
+	private static int TMT = 1;
+	private static int Amount = 1;
+	private static int nProc = 1;
+	private static int ArrayList<CPU> system = new ArrayList<CPU>();
+	public static void main (String [] args) {
+		for (int i = 0; i < N_CPUS; i++) {
+			system.add(new CPU(0, 0, 0));
+		}
+		
+		while(true) {
+			//update the state of old tasks
+			for (int i = 0; i < N_CPUS; i++) {
+				system.get(i).update();
+				system.get(i).addTaskGenerator(TMT, Amount, nProc, "intense");
+			}
+			//generate new tasks
+			for (int i = 0; i < N_CPUS; i++) {
+				system.get(i).generateTask();
+			}
+			
+		}
+	}
+}

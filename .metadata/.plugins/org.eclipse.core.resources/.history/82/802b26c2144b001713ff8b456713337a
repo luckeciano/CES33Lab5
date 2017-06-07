@@ -1,0 +1,16 @@
+
+public class Task {
+	private static int taskID = 0;
+	private int cpuID;
+	private int creationTime;
+	private int executionTime;
+	private int myID;
+	
+	public Task (int ID, int cTime, int eTime) {
+		myID = taskID++;
+		cpuID = ID;
+		creationTime = cTime;
+		executionTime = eTime;
+	}
+
+}

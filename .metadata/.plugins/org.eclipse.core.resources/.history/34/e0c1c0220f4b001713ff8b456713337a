@@ -1,0 +1,10 @@
+import java.util.ArrayList;
+
+public class MultiCPUSystem {
+	private static ArrayList<CPU> system = new ArrayList<CPU>();
+	
+	public void addCPU (CPU cpu) {
+		system.add(cpu);
+	}
+
+}
