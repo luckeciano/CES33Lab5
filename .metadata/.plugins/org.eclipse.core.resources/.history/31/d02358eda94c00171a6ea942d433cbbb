@@ -1,0 +1,16 @@
+package Hibrido;
+
+public class HibridStrategy {
+
+
+	public void doEmissorSurvey(CPU cpu, MultiCPUSystem system, Task task) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void doReceptorSurvey(CPU cpu, MultiCPUSystem system, Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

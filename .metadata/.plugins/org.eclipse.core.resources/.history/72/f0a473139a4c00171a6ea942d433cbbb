@@ -1,0 +1,18 @@
+
+public class LightTaskGenerator implements TaskGenerator {
+	private int TMT;
+	private int AMOUNT;
+	private int nProcessors;
+	private static int time = 0;
+	
+	public LightTaskGenerator (int tmt, int amount, int nProc) {
+		TMT = tmt;
+		AMOUNT = amount;
+		nProcessors = nProc;
+	}
+	@Override
+	public Task generateTask(int cpuID, int startTime, int eTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

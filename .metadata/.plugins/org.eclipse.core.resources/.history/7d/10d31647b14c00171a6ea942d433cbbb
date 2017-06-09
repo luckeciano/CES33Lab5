@@ -1,0 +1,9 @@
+package Extra;
+
+public class CentralCPU extends CPU {
+
+	public CentralCPU(int nProc, int cpuUse, int processRate) {
+		super(nProc, cpuUse, processRate);
+	}
+
+}

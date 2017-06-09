@@ -1,0 +1,122 @@
+package Extra;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class CPU {
+	private static final int MAX_CPU_RATE_THRESHOLD = 80;
+	private static final int MAX_PROCESS_RATIO_THRESHOLD = 40;
+	private static final int MAX_CPU_N_PROCESS_THRESHOLD = 20;
+	private int receivedRequest = 0;
+	private int transmitedRequest = 0;
+	private static int ID = 0;
+	private int nProcess = 0;
+	private int cpuID;
+	private int timeForNewTask = 0;
+	private int rateCPU;
+	private int processRatio;
+	private int surveyRate = 20;
+	protected ArrayList<Task> runningTasks;
+	private TaskGenerator taskGenerator;
+	public CPU(int nProc, int cpuUse, int processRate) {
+		cpuID = ID++;
+		nProcess = nProc;
+		rateCPU = cpuUse;
+		processRatio = processRate;
+		runningTasks = new ArrayList<Task>();
+	}
+	
+	public void addTaskGenerator (int TMT, int Amount, int nProc, String generatorType) {
+		taskGenerator = TaskFactory.createTaskGenerator(generatorType, TMT, Amount, nProc);
+	}
+	
+	public void generateTask(MultiCPUSystem system, int realTime) { 
+		Task task = taskGenerator.generateTask(cpuID, realTime, timeForNewTask);
+		boolean inSurvey = false;
+		if (task == null) {
+			return;
+		} else {
+			timeForNewTask = 0;
+			System.out.println("Pulling task " + task.getID() + " into Central CPU");
+			system.getCentralCPU().pullTask(task);
+		}
+		update(inSurvey, system);	
+	}
+	
+	public boolean isBusy(CPU requestFromCPU) {
+		if (requestFromCPU != this) {
+			requestFromCPU.incrementRequests();
+			receivedRequest++;
+		}
+		int rateNow = 0;
+		for (Task task : runningTasks) {
+			rateNow += task.getTaskRate();
+		}
+		
+		if (rateNow > MAX_CPU_RATE_THRESHOLD) return true;
+		
+		if (processRatio > MAX_PROCESS_RATIO_THRESHOLD) return true;
+		
+		if (runningTasks.size() > MAX_CPU_N_PROCESS_THRESHOLD) return true;
+		
+		return false;
+	}
+	
+	private void incrementRequests() {
+		transmitedRequest++;
+		
+	}
+
+	public void update(boolean inSurvey, MultiCPUSystem system) {
+		int rateNow = 0;
+		if (inSurvey) rateNow = surveyRate;
+		for (int i = 0; i < runningTasks.size() && rateNow < rateCPU; i++) {
+			rateNow += runningTasks.get(i).getTaskRate();
+			runningTasks.get(i).execute(this);
+			if (runningTasks.get(i).getRemainingTime() <= 0) {
+				System.out.println("Process " + runningTasks.get(i).getID() + " from CPU "
+						+ this.getID() + " is done. Killing process...");
+				runningTasks.remove(runningTasks.get(i));
+			}
+		}
+		timeForNewTask++;
+		nProcess = runningTasks.size();
+		
+	}
+	
+	public void updateProcessRatio(int totalProcess) {
+		if (totalProcess != 0)
+			processRatio = (100*runningTasks.size())/totalProcess;
+	}
+
+	public int getNumberOfTasks() {
+		return nProcess;
+	}
+
+	public int getID() {
+		// TODO Auto-generated method stub
+		return cpuID;
+	}
+
+	public void pullTask(Task task) {
+ 
+		runningTasks.add(task);
+		
+	}
+
+	public int getReceivedRequests() {
+		return receivedRequest;
+	}
+	public int getTransmitedRequests() {
+		return transmitedRequest;
+	}
+
+	public Task takeRandomTask() {
+		Random random = new Random();
+		int randomTask = random.nextInt(runningTasks.size());
+		Task toPass = runningTasks.get(randomTask);
+		runningTasks.remove(toPass);
+		return toPass;
+	}
+
+
+}

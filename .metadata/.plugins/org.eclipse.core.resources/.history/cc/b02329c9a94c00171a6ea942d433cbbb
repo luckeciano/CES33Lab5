@@ -1,0 +1,16 @@
+package Hibrido;
+
+public class HibridStrategy implements SurveyStrategy {
+
+	@Override
+	public void doSurvey(CPU thisCPU, MultiCPUSystem system, Task task) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void doEmissorSurvey(CPU cpu, MultiCPUSystem system, Task task) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

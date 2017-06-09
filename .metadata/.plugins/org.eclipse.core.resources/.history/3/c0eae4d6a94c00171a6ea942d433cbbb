@@ -1,0 +1,11 @@
+package Hibrido;
+
+public class HibridStrategy {
+
+
+	public void doEmissorSurvey(CPU cpu, MultiCPUSystem system, Task task) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
