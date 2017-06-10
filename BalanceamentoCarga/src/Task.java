@@ -1,6 +1,6 @@
 
 public class Task {
-	private static int taskID = 0;
+	public static int taskID = 0;
 	private int cpuID;
 	private int creationTime;
 	private int remainingTime;

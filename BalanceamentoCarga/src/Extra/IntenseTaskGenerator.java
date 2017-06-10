@@ -10,6 +10,7 @@ public class IntenseTaskGenerator implements TaskGenerator {
 	private static int stdTime = 500;
 	private static int upperBoundRate = 25;
 	private static int lowerBoundRate = 5;
+	
 	public IntenseTaskGenerator (int tmt, int amount, int nProc) {
 		TMT = tmt;
 		meanTime = tmt;

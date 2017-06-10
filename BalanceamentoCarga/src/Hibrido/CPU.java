@@ -18,6 +18,7 @@ public class CPU {
 	private int rateCPU;
 	private int processRatio;
 	private int surveyRate = 20;
+	private int rateNow = 0;
 	private ArrayList<Task> runningTasks;
 	private TaskGenerator taskGenerator;
 	private HibridStrategy strategy;
@@ -28,7 +29,9 @@ public class CPU {
 		processRatio = processRate;
 		runningTasks = new ArrayList<Task>();
 	}
-	
+	public int getRate(){
+		return rateNow;
+	}
 	public void addSurveyStrategy (String strategyType) {
 		if (strategyType == "receptor")
 			strategy = new HibridStrategy();
@@ -102,7 +105,7 @@ public class CPU {
 	}
 
 	public void update(boolean inSurvey, MultiCPUSystem system) {
-		int rateNow = 0;
+		rateNow = 0;
 		if (inSurvey) rateNow = surveyRate;
 		for (int i = 0; i < runningTasks.size() && rateNow < rateCPU; i++) {
 			rateNow += runningTasks.get(i).getTaskRate();

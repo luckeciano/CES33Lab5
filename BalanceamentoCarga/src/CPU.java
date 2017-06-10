@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 /***
  * 
- * Classe CPU - Abstração que simula uma CPU
+ * Classe CPU - Abstraï¿½ï¿½o que simula uma CPU
  *
  */
 public class CPU {
@@ -17,6 +17,7 @@ public class CPU {
 	private int rateCPU;
 	private int processRatio;
 	private int surveyRate = 20;
+	private int rateNow = 0;
 	private ArrayList<Task> runningTasks;
 	private TaskGenerator taskGenerator;
 	private SurveyStrategy strategy;
@@ -27,14 +28,17 @@ public class CPU {
 		processRatio = processRate;
 		runningTasks = new ArrayList<Task>();
 	}
-	//Escolher qual heurística escolher para balanceamento
+	public int getRate(){
+		return rateNow;
+	}
+	//Escolher qual heurï¿½stica escolher para balanceamento
 	public void addSurveyStrategy (String strategyType) {
 		if (strategyType == "emissor")
 			strategy = new EmissorStrategy();
 		else if (strategyType == "receptor")
 			strategy = new ReceptorStrategy();
 	}
-	// Criação do gerador de tarefas do tipo especificado
+	// Criaï¿½ï¿½o do gerador de tarefas do tipo especificado
 	public void addTaskGenerator (int TMT, int Amount, int nProc, String generatorType) {
 		taskGenerator = TaskFactory.createTaskGenerator(generatorType, TMT, Amount, nProc);
 	}
@@ -86,7 +90,7 @@ public class CPU {
 	public void update(boolean inSurvey) {
 		
 		ArrayList<Integer> killProcess = new ArrayList<Integer>();
-		int rateNow = 0;
+		rateNow = 0;
 		if (inSurvey) rateNow = surveyRate;
 		for (int i = 0; i < runningTasks.size() && rateNow < rateCPU; i++) {
 			rateNow += runningTasks.get(i).getTaskRate();

@@ -11,10 +11,10 @@ public class LightTaskGenerator implements TaskGenerator {
 	private static int lowerBoundRate = 5;
 	
 	public LightTaskGenerator (int tmt, int amount, int nProc) {
-		TMT = tmt/3;
-		meanTime = tmt/3;
+		TMT = tmt;
+		meanTime = tmt;
 		stdTime = (int)0.1*tmt;
-		AMOUNT = amount;
+		AMOUNT = amount/3;
 		nProcessors = nProc;
 	}
 	

@@ -15,6 +15,7 @@ public class CPU {
 	private int rateCPU;
 	private int processRatio;
 	private int surveyRate = 20;
+	private int rateNow = 0;
 	protected ArrayList<Task> runningTasks;
 	private TaskGenerator taskGenerator;
 	public CPU(int nProc, int cpuUse, int processRate) {
@@ -24,7 +25,9 @@ public class CPU {
 		processRatio = processRate;
 		runningTasks = new ArrayList<Task>();
 	}
-	
+	public int getRate(){
+		return rateNow;
+	}
 	public void addTaskGenerator (int TMT, int Amount, int nProc, String generatorType) {
 		taskGenerator = TaskFactory.createTaskGenerator(generatorType, TMT, Amount, nProc);
 	}
@@ -72,7 +75,7 @@ public class CPU {
 	}
 
 	public void update(boolean inSurvey, MultiCPUSystem system) {
-		int rateNow = 0;
+		rateNow = 0;
 		if (inSurvey) rateNow = surveyRate;
 		for (int i = 0; i < runningTasks.size() && rateNow < rateCPU; i++) {
 			rateNow += runningTasks.get(i).getTaskRate();

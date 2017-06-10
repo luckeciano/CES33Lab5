@@ -9,7 +9,7 @@ public class Main {
 	private static int nProc = 1;
 	
 	public static void main (String [] args) {
-		
+		double cpuAvgUse[] = new double[N_CPUS];
 		MultiCPUSystem system = new MultiCPUSystem();
 		for (int i = 0; i < N_CPUS; i++) {
 			CPU cpu = new CPU(0, 100, 0);
@@ -41,13 +41,23 @@ public class Main {
 			system.getCentralCPU().manageTasks(system);
 			System.out.println("Number of tasks on Central CPU: " + system.getCentralCPU().getNumberOfTasks());
 			realTime++;
-			
+			for (int i = 0; i < N_CPUS; i++) {
+				cpuAvgUse[i] = (cpuAvgUse[i]*(cycles-1)+system.getCPU(i).getRate())/cycles;
+			}
+			System.out.println(cycles+" CICLOS <<<--------");
 		}
-		System.out.println("TOTAL NUMBER OF REQUESTS FROM SURVEYS: ");
+		System.out.println("AVG CPU USAGE:");
+		double total = 0;
 		for (int i = 0; i < N_CPUS; i++) {
-			System.out.println("RECEIVED: " + system.getCPU(i).getReceivedRequests());
-			System.out.println("TRANSMITED: " + system.getCPU(i).getTransmitedRequests());
-			
+			System.out.println("CPU #"+i+": "+ cpuAvgUse[i]);
+			total = total + cpuAvgUse[i];
+		}
+		System.out.println("AVERAGE: "+total/N_CPUS);
+		System.out.println("TASKS EXECUTED: "+Task.taskID);
+		System.out.println("TOTAL NUMBER OF REQUESTS FROM SURVEYS: \nRECEIVED\tTRANSMITED");
+		for (int i = 0; i < N_CPUS; i++) {
+			System.out.println(system.getCPU(i).getReceivedRequests()+"\t"+ system.getCPU(i).getTransmitedRequests());	
 		}
 	}
 }
+
